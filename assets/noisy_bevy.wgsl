@@ -2,8 +2,17 @@
 
 #define_import_path noisy_bevy
 
+#import bevy_render::maths::PI;
+
 fn permute_3_(x: vec3<f32>) -> vec3<f32> {
     return (((x * 34.) + 1.) * x) % vec3(289.);
+}
+
+fn rotate2d(angle: f32) -> mat2x2<f32> {
+    return mat2x2(
+        cos(angle), -sin(angle),
+        sin(angle), cos(angle)
+    );
 }
 
 fn simplex_noise_2d(v: vec2<f32>) -> f32 {
@@ -264,3 +273,28 @@ fn worley_2d(pos: vec2<f32>) -> vec2<f32> {
     return sqrt(d1.xy);
 }
 
+fn lines(pos: vec2<f32>, line_blend_factor: f32) -> f32 {
+    let scale = 10.0;
+    let scaled_pos = pos * scale;
+
+    return smoothstep(
+        0.0,
+        0.5 + line_blend_factor * 0.5,
+        abs((sin(scaled_pos.x * 3.1415) + line_blend_factor * 2.0)) * 0.5
+    );
+}
+
+fn wood_2d(pos: vec2<f32>, line_blend_factor: f32, time: f32) -> f32 {
+    let noise_frequency_scale = 1.0;
+    let lines_frequency_scale = 10.0;
+
+    let noise_input = pos * noise_frequency_scale + vec2(time, time);
+    let noise_value = simplex_noise_2d(noise_input);
+    let angle = noise_value * 2.0 * PI;
+    let rotation = rotate2d(angle);
+
+    let scaled_pos = pos * lines_frequency_scale;
+    let rotated_scaled_pos = rotation * scaled_pos;
+
+    return lines(rotated_scaled_pos, line_blend_factor);
+}
