@@ -55,7 +55,7 @@ fn setup(
     let material_handle = materials.add(BackgroundMaterial {
         params: vec2(frequency_scale, amplitude_scale),
     });
-    let mesh_handle = meshes.add(Mesh::from(Rectangle::from_size(Vec2::new(100.0, 100.0))));
+    let mesh_handle = meshes.add(Mesh::from(Rectangle::from_size(Vec2::new(1000.0, 1000.0))));
 
     commands.spawn((
         Transform::default(),
