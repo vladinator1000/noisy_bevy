@@ -3,7 +3,7 @@
     get_world_from_local,
     mesh2d_position_local_to_clip,
 }
-#import noisy_bevy::sediment_layers
+#import noisy_bevy::wood_2d
 
 @group(2) @binding(0) var<uniform> freq_scale: f32;
 @group(2) @binding(1) var<uniform> line_blend_factor: f32;
@@ -34,8 +34,7 @@ fn fragment(
     vertex_output: VertexOutput,
 ) -> @location(0) vec4<f32> {
     let pos = vertex_output.clip_position.xy * freq_scale;
-    let time = globals.time * 0.01;
-    let pattern = sediment_layers(pos + time, 1.0);
+    let pattern = wood_2d(pos, line_blend_factor, globals.time * 0.01);
 
     return vec4(vec3(pattern), 1.0);
 }
