@@ -273,20 +273,20 @@ fn worley_2d(pos: vec2<f32>) -> vec2<f32> {
     return sqrt(d1.xy);
 }
 
-fn lines(pos: vec2<f32>, line_blend_factor: f32) -> f32 {
+fn lines(pos: vec2<f32>, blend: f32) -> f32 {
     let scale = 10.0;
     let scaled_pos = pos * scale;
 
     return smoothstep(
         0.0,
-        0.5 + line_blend_factor * 0.5,
-        abs((sin(scaled_pos.x * 3.1415) + line_blend_factor * 2.0)) * 0.5
+        0.5 + blend * 0.5,
+        abs((sin(scaled_pos.x * 3.1415) + blend * 2.0)) * 0.5
     );
 }
 
 fn wood_2d(pos: vec2<f32>, line_blend_factor: f32, time: f32) -> f32 {
     let noise_frequency_scale = 1.0;
-    let lines_frequency_scale = 10.0;
+    let lines_frequency_scale = 5.0;
 
     let noise_input = pos * noise_frequency_scale + vec2(time, time);
     let noise_value = simplex_noise_2d(noise_input);
