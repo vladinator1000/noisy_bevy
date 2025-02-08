@@ -34,7 +34,7 @@ fn fragment(
     vertex_output: VertexOutput,
 ) -> @location(0) vec4<f32> {
     let pos = vertex_output.clip_position.xy * freq_scale;
-    let time =  globals.time * 0.01;
+    let time =  globals.time * 0.005;
     let pattern = wood_2d(pos, line_blend_factor, time);
 
     return vec4(vec3(pattern), 1.0);

@@ -50,8 +50,8 @@ fn setup(
     ));
 
     let material_handle = materials.add(WoodMaterial {
-        freq_scale: 0.0001,
-        line_blend_factor: 0.5,
+        freq_scale: 0.00005,
+        line_blend_factor: 1.0,
     });
     let mesh_handle = meshes.add(Mesh::from(Rectangle::from_size(Vec2::new(1000.0, 1000.0))));
 
